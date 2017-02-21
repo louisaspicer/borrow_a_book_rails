@@ -20,4 +20,16 @@ feature 'books' do
       expect(page).not_to have_content("No books have been added")
     end
   end
+
+  context 'adding books' do
+    scenario 'prompts user to fill out a form, then displays the book' do
+      visit('/books')
+      click_link('Add your own book to lend!')
+      fill_in('Title', with: 'The Design of Everyday Things')
+      fill_in('Author', with: 'Don Norman')
+      click_link('Submit your book')
+      expect(page).to have_content('The Design of Everyday Things')
+      expect(current_path).to eq('/books')
+    end
+  end
 end
