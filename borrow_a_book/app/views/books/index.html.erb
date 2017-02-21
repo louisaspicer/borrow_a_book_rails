@@ -2,6 +2,13 @@
   <% @books.each do |book| %>
   <h2> <%= link_to book.title, book_path(book) %> </h2>
   <h3> <%= book.author %> </h3>
+
+  <% book.comments.each do |comment| %>
+    <p> <%= comment.comments %> </p>
+    <p> <%= "-------------" %>
+  <% end %>
+
+  <%= link_to "Comment on #{book.title}", new_book_comment_path(book) %>
   <%= link_to "Edit #{book.title}", edit_book_path(book) %>
   <%= link_to "Delete #{book.title}", book_path(book), method: :delete %>
   <% end %>
