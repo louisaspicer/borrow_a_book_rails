@@ -58,6 +58,19 @@ feature 'books' do
       expect(page).to have_content 'The Design of Everyday Things'
       expect(page).to have_content 'Don Norman'
       expect(current_path).to eq '/books/1'
+    end
   end
+
+  context 'deleting books' do
+
+  before { Book.create(title: 'The Design of Everyday Things', author: 'Don Norman', id: 1) }
+
+  scenario 'removes a book when a user clicks a delete link' do
+    visit '/books'
+    click_link 'Delete The Design of Everyday Things'
+    expect(page).not_to have_content 'Don Norman'
+    expect(page).to have_content 'The Design of Everyday Things deleted successfully'
   end
+
+end
 end
