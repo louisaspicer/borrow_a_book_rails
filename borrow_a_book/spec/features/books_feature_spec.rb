@@ -8,4 +8,16 @@ feature 'books' do
       expect(page).to have_link('Add your own book to lend!')
     end
   end
+
+  context 'books have been added' do
+    before do
+      Book.create(title: "Don't Make Me Think", author: "Steve Krug")
+    end
+
+    scenario 'displaying the books' do
+      visit('/books')
+      expect(page).to have_content("Don't Make Me Think")
+      expect(page).not_to have_content("No books have been added")
+    end
+  end
 end
