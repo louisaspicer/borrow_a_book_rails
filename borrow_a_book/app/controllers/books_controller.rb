@@ -17,6 +17,16 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
   end
 
+  def edit
+    @book = Book.find(params[:id])
+  end
+
+  def update
+    @book = Book.find(params[:id])
+    @book.update(books_params)
+    redirect_to('/books')
+  end
+
   private
 
   def books_params

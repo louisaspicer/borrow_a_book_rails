@@ -44,4 +44,20 @@ feature 'books' do
       expect(current_path).to eq "/books/#{book1.id}"
     end
   end
+
+  context 'editing books' do
+
+    before { Book.create(title: 'The Design of Everyday Thing', author: 'Don Norma', id: 1) }
+    scenario 'let a user edit a book' do
+      visit '/books'
+      click_link 'Edit The Design of Everyday Thing'
+      fill_in 'Title', with: 'The Design of Everyday Things'
+      fill_in 'Author', with: 'Don Norman'
+      click_button 'Update your book'
+      click_link 'The Design of Everyday Things'
+      expect(page).to have_content 'The Design of Everyday Things'
+      expect(page).to have_content 'Don Norman'
+      expect(current_path).to eq '/books/1'
+  end
+  end
 end
