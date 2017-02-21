@@ -32,4 +32,16 @@ feature 'books' do
       expect(current_path).to eq('/books')
     end
   end
+
+  context 'viewing books' do
+    let!(:book1){ Book.create(title: "The Design of Everyday Things", author: "Don Norman") }
+    let!(:book2){ Book.create(title: "Don't Make Me Think", author: "Steve Krug") }
+    scenario 'click on book to view book on its own page' do
+      visit('/books')
+      click_link('The Design of Everyday Things')
+      expect(page).to have_content('The Design of Everyday Things')
+      expect(page).not_to have_content("Don't Make Me Think")
+      expect(current_path).to eq "/books/#{book1.id}"
+    end
+  end
 end
