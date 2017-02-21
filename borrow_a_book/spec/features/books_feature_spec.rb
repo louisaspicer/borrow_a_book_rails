@@ -27,7 +27,7 @@ feature 'books' do
       click_link('Add your own book to lend!')
       fill_in('Title', with: 'The Design of Everyday Things')
       fill_in('Author', with: 'Don Norman')
-      click_link('Submit your book')
+      click_button('Submit your book')
       expect(page).to have_content('The Design of Everyday Things')
       expect(current_path).to eq('/books')
     end
