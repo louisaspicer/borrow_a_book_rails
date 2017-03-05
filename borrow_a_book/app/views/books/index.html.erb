@@ -13,9 +13,11 @@
               <p> <%= "-------------" %><br>
             <% end %>
 
-            <%= link_to "Comment", new_book_comment_path(book) %> |
-            <%= link_to "Edit", edit_book_path(book) %> |
+            <%= link_to "Comment", new_book_comment_path(book) %>
+            <% if current_user.id == book.user_id %>
+            <%= link_to "Edit", edit_book_path(book) %>
             <%= link_to "Delete", book_path(book), method: :delete %>
+            <% end %>
           </div>
           <div class="col-md-6 box">
             <br>
