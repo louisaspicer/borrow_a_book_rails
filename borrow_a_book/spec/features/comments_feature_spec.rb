@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 feature 'Comments' do
-  before { Book.create title: 'The Design of Everyday Things', author: 'Don Norman' }
+  before do
+    sign_up
+    Book.create title: 'The Design of Everyday Things', author: 'Don Norman', user_id: User.first.id
+  end
 
   scenario 'allows users to comment on a book' do
      visit '/books'

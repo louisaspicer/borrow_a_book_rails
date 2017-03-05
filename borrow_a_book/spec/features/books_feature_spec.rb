@@ -3,12 +3,7 @@ require 'rails_helper'
 feature 'books' do
 
   before do
-    visit('/')
-    click_link('Sign up')
-    fill_in('Email', with: 'test@example.com')
-    fill_in('Password', with: 'testtest')
-    fill_in('Password confirmation', with: 'testtest')
-    click_button('Sign up')
+    sign_up
   end
 
   context 'no books to display' do
@@ -21,7 +16,8 @@ feature 'books' do
 
   context 'books have been added' do
     before do
-      Book.create(title: "Don't Make Me Think", author: "Steve Krug")
+      id = User.first.id
+      Book.create(title: "Don't Make Me Think", author: "Steve Krug", user_id: id)
     end
 
     scenario 'displaying the books' do
@@ -37,6 +33,7 @@ feature 'books' do
       click_link('Add a book')
       fill_in('Title', with: 'The Design of Everyday Things')
       fill_in('Author', with: 'Don Norman')
+      save_and_open_page
       click_button('Submit your book')
       expect(page).to have_content('The Design of Everyday Things')
       expect(current_path).to eq('/books')
@@ -44,20 +41,26 @@ feature 'books' do
   end
 
   context 'viewing books' do
-    let!(:book1){ Book.create(title: "The Design of Everyday Things", author: "Don Norman") }
-    let!(:book2){ Book.create(title: "Don't Make Me Think", author: "Steve Krug") }
+
+    before do
+      id = User.first.id
+      Book.create(title: "The Design of Everyday Things", author: "Don Norman", user_id: id)
+      Book.create(title: "Don't Make Me Think", author: "Steve Krug", user_id: id)
+    end
+
     scenario 'click on book to view book on its own page' do
+      book_id = Book.first.id
       visit('/books')
       click_link('The Design of Everyday Things')
       expect(page).to have_content('The Design of Everyday Things')
       expect(page).not_to have_content("Don't Make Me Think")
-      expect(current_path).to eq "/books/#{book1.id}"
+      expect(current_path).to eq "/books/#{book_id}"
     end
   end
 
   context 'editing books' do
 
-    before { Book.create(title: 'The Design of Everyday Thing', author: 'Don Norma', id: 1) }
+    before { Book.create(title: 'The Design of Everyday Thing', author: 'Don Norma', user_id: User.first.id) }
     scenario 'let a user edit a book' do
       visit '/books'
       click_link 'Edit'
@@ -67,13 +70,12 @@ feature 'books' do
       click_link 'The Design of Everyday Things'
       expect(page).to have_content 'The Design of Everyday Things'
       expect(page).to have_content 'Don Norman'
-      expect(current_path).to eq '/books/1'
     end
   end
 
   context 'deleting books' do
 
-  before { Book.create(title: 'The Design of Everyday Things', author: 'Don Norman', id: 1) }
+  before { Book.create(title: 'The Design of Everyday Things', author: 'Don Norman', user_id: User.first.id) }
 
   scenario 'removes a book when a user clicks a delete link' do
     visit '/books'
