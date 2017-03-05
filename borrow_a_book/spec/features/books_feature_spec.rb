@@ -1,11 +1,21 @@
 require 'rails_helper'
 
 feature 'books' do
+
+  before do
+    visit('/')
+    click_link('Sign up')
+    fill_in('Email', with: 'test@example.com')
+    fill_in('Password', with: 'testtest')
+    fill_in('Password confirmation', with: 'testtest')
+    click_button('Sign up')
+  end
+
   context 'no books to display' do
     scenario 'should display a prompt to add a book' do
       visit '/books'
       expect(page).to have_content('No books have been added')
-      expect(page).to have_link('Add your own book to lend!')
+      expect(page).to have_link('Add a book')
     end
   end
 
@@ -24,7 +34,7 @@ feature 'books' do
   context 'adding books' do
     scenario 'prompts user to fill out a form, then displays the book' do
       visit('/books')
-      click_link('Add your own book to lend!')
+      click_link('Add a book')
       fill_in('Title', with: 'The Design of Everyday Things')
       fill_in('Author', with: 'Don Norman')
       click_button('Submit your book')
@@ -50,7 +60,7 @@ feature 'books' do
     before { Book.create(title: 'The Design of Everyday Thing', author: 'Don Norma', id: 1) }
     scenario 'let a user edit a book' do
       visit '/books'
-      click_link 'Edit The Design of Everyday Thing'
+      click_link 'Edit'
       fill_in 'Title', with: 'The Design of Everyday Things'
       fill_in 'Author', with: 'Don Norman'
       click_button 'Update your book'
@@ -67,7 +77,7 @@ feature 'books' do
 
   scenario 'removes a book when a user clicks a delete link' do
     visit '/books'
-    click_link 'Delete The Design of Everyday Things'
+    click_link 'Delete'
     expect(page).not_to have_content 'Don Norman'
     expect(page).to have_content 'The Design of Everyday Things deleted successfully'
   end

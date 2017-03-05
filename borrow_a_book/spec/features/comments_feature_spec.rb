@@ -5,7 +5,7 @@ feature 'Comments' do
 
   scenario 'allows users to comment on a book' do
      visit '/books'
-     click_link 'Comment on The Design of Everyday Things'
+     click_link 'Comment'
      fill_in 'Comments', with: 'Great book!'
      click_button 'Leave Comment'
      expect(current_path).to eq '/books'

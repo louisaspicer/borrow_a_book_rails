@@ -6,16 +6,58 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <style>
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+    .container {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+
+    .row {
+      margin: 25px;
+    }
+
+    .box {
+    padding: 0 5px 0 5px;
+    }
+
+    .inner {
+    background-color: lavender;
+    }
+
+
+    }
+  </style>
   </head>
 
   <body>
-    <% if user_signed_in? %>
-      <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
-    <% else %>
-      <%= link_to "Sign in", new_user_session_path %>
-      <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path %>
-      <%= link_to "Sign up", new_user_registration_path %>
-    <% end %>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Borrow My Book</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Home</a></li>
+            <% if user_signed_in? %>
+            <li> <%= link_to 'Add a book', new_book_path %></li>
+            <% end %>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <% if user_signed_in? %>
+              <li><%= link_to "Sign out", destroy_user_session_path, method: :delete %></li>
+            <% else %>
+              <li><%= link_to "Login", new_user_session_path %></li>
+              <li><%= link_to "Login with Facebook", user_facebook_omniauth_authorize_path %></li>
+              <li><%= link_to "Sign up", new_user_registration_path %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
     <p class="alert"><%= alert %></p>
     <p class="notice"><%= notice %></p>
     <%= yield %>

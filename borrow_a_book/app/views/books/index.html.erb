@@ -1,20 +1,31 @@
-<% if @books.any? %>
-  <% @books.each do |book| %>
-  <h2> <%= link_to book.title, book_path(book) %> </h2>
-  <h3> <%= book.author %> </h3>
-  <%= image_tag book.image.url(:thumb) %>
+<div class="container">
+  <div class="row">
+    <% if @books.any? %>
+      <% @books.each do |book| %>
+        <div class="col-md-6 box">
+          <div class="inner">
+            <div class="col-md-6 box">
+            <h3> <%= link_to book.title, book_path(book) %> </h2>
+            <h4> by <%= book.author %> </h3><br>
 
-  <% book.comments.each do |comment| %>
-    <p> <%= comment.comments %> </p>
-    <p> <%= "-------------" %>
-  <% end %>
+            <% book.comments.each do |comment| %>
+              <p> <%= comment.comments %> </p>
+              <p> <%= "-------------" %><br>
+            <% end %>
 
-  <%= link_to "Comment on #{book.title}", new_book_comment_path(book) %>
-  <%= link_to "Edit #{book.title}", edit_book_path(book) %>
-  <%= link_to "Delete #{book.title}", book_path(book), method: :delete %>
-  <% end %>
-<% else %>
-  No books have been added
-<% end %>
-
-<%= link_to 'Add your own book to lend!', new_book_path %>
+            <%= link_to "Comment", new_book_comment_path(book) %> |
+            <%= link_to "Edit", edit_book_path(book) %> |
+            <%= link_to "Delete", book_path(book), method: :delete %>
+          </div>
+          <div class="col-md-6 box">
+            <br>
+            <%= image_tag book.image.url(:medium) %><br>
+          </div>
+        </div>
+        </div>
+      <% end %>
+    <% else %>
+      No books have been added.
+    <% end %>
+  </div>
+</div>
