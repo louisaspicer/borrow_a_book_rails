@@ -26,12 +26,6 @@ class BooksController < ApplicationController
 
   def edit
     @book = Book.find(params[:id])
-    if authenticate_book_owner(@book)
-      @book = Book.find(params[:id])
-    else
-      flash[:alert] = "You can't edit a book that you don't own"
-      redirect_to books_path
-    end
   end
 
   def update
