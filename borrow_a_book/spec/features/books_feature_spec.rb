@@ -33,7 +33,6 @@ feature 'books' do
       click_link('Add a book')
       fill_in('Title', with: 'The Design of Everyday Things')
       fill_in('Author', with: 'Don Norman')
-      save_and_open_page
       click_button('Submit your book')
       expect(page).to have_content('The Design of Everyday Things')
       expect(current_path).to eq('/books')
@@ -61,9 +60,10 @@ feature 'books' do
   context 'editing books' do
 
     before { Book.create(title: 'The Design of Everyday Thing', author: 'Don Norma', user_id: User.first.id) }
+
     scenario 'let a user edit a book' do
       visit '/books'
-      click_link 'Edit'
+      click_button 'Edit'
       fill_in 'Title', with: 'The Design of Everyday Things'
       fill_in 'Author', with: 'Don Norman'
       click_button 'Update your book'
@@ -75,14 +75,25 @@ feature 'books' do
 
   context 'deleting books' do
 
-  before { Book.create(title: 'The Design of Everyday Things', author: 'Don Norman', user_id: User.first.id) }
+    before { Book.create(title: 'The Design of Everyday Things', author: 'Don Norman', user_id: User.first.id) }
 
-  scenario 'removes a book when a user clicks a delete link' do
-    visit '/books'
-    click_link 'Delete'
-    expect(page).not_to have_content 'Don Norman'
-    expect(page).to have_content 'The Design of Everyday Things deleted successfully'
+    scenario 'removes a book when a user clicks a delete link' do
+      visit '/books'
+      click_button 'Delete'
+      expect(page).not_to have_content 'Don Norman'
+      expect(page).to have_content 'The Design of Everyday Things deleted successfully'
+    end
   end
 
-end
+  context 'requesting books' do
+
+    before { Book.create(title: 'The Design of Everyday Things', author: 'Don Norman', user_id: User.first.id) }
+
+    scenario "user clicks request book button for another user's book" do
+      book_title = Book.first.title
+      visit '/books'
+      click_button 'Request book'
+      expect(page).to have_content "You have requested #{book_title}"
+    end
+  end
 end
