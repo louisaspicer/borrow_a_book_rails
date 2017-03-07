@@ -1,0 +1,7 @@
+<%= form_for [@book, @request] do |f| %>
+  <%= f.label :request_from %>
+  <%= f.date_field :request_from %>
+  <%= f.label :request_to %>
+  <%= f.date_field :request_to %>
+  <%= f.submit "Request #{@book.title}" %>
+<% end %>

@@ -5,4 +5,8 @@ class RequestsController < ApplicationController
     @request = Request.new
   end
 
+  def request_params
+    params.require(:request).permit(:requests)
+  end
+
 end

@@ -13,7 +13,9 @@ feature 'Requests' do
     book_title = Book.first.title
     visit '/books'
     click_button 'Request'
-    expect(current_path).to eq '/books'
+    fill_in "Request from", with: DateTime.now.strftime('%d/%m/%Y')
+    fill_in "Request from", with: (DateTime.now + 1).strftime('%d/%m/%Y')
+    click_button "Request #{book_title}"
     expect(page).to have_content("You have made a request for #{book_title}")
   end
 
