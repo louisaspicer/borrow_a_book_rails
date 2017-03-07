@@ -7,6 +7,9 @@ feature 'Requests' do
   end
 
   scenario 'allows users to request on a book' do
+    # save_and_open_page
+    click_link('Sign out')
+    sign_up_2
     book_title = Book.first.title
     visit '/books'
     click_button 'Request'

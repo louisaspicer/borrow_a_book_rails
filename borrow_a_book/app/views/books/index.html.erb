@@ -68,6 +68,9 @@
 
             <%= link_to "Comment", new_book_comment_path(book) %>
             <% if current_user %>
+              <% if current_user.id != book.user_id %>
+                <%= button_to "Request", new_book_request_path(book) %>
+                <% end %>
               <% if current_user.id == book.user_id %>
                 <p><%= button_to "Edit", edit_book_path(book), class:"btn btn-default", :method => :get %>
                 <%= button_to "Delete", book_path(book), class:"btn btn-danger", method: :delete, data: { confirm: "Are you sure?" } %></p>

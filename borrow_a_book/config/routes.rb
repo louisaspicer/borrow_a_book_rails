@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :books do
     resources :comments
+    resources :requests
   end
 
   root to: "books#index"
