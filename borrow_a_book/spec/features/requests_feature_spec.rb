@@ -19,4 +19,13 @@ feature 'Requests' do
     expect(page).to have_content("You have made a request for #{book_title}")
   end
 
+  scenario 'user can see a list of incoming requests' do
+    click_link('Sign out')
+    sign_up_2
+    request_a_book
+    book_title = Book.first.title
+    click_link('Incoming Requests')
+    expect(page).to have_content("#{book_title} has been requested by test2@example.com")
+  end
+
 end

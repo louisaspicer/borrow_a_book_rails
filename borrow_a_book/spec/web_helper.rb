@@ -22,3 +22,12 @@ def add_book
   fill_in('Author', with: 'An author')
   click_button('Submit your book')
 end
+
+def request_a_book
+  book_title = Book.first.title
+  visit '/books'
+  click_button 'Request'
+  fill_in "Request from", with: DateTime.now.strftime('%d/%m/%Y')
+  fill_in "Request from", with: (DateTime.now + 1).strftime('%d/%m/%Y')
+  click_button "Request #{book_title}"
+end
