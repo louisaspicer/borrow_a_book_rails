@@ -50,7 +50,11 @@
     <% @books.each do |book| %>
     <div class="col-sm-6 col-md-4">
       <div class="thumbnail">
+        <% if book.image.url(:medium) %>
         <%= image_tag book.image.url(:medium) %>
+        <% else %>
+        <%= image_tag("placeholder.jpg") %>
+        <% end %>
         <div class="caption">
           <h3><%= link_to book.title, book_path(book) %></h3>
           <h4>by <%= book.author %></h4>
