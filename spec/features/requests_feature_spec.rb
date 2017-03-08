@@ -27,7 +27,7 @@ feature 'Requests' do
     click_link('Sign out')
     login
     click_link('Incoming Requests')
-    expect(page).to have_content("#{book_title} has been requested by test2@example.com")
+    expect(page).to have_content("test2@example.com would like to borrow this book.")
   end
 
 end

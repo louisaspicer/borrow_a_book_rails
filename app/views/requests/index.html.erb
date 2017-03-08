@@ -1,10 +1,23 @@
-<% if @books.any? %>
-<% @books.each do |book| %>
-<% if book.requests.any? %>
-  <% book.requests.each do |request| %>
-  <%= image_tag request.book.image.url(:medium) %>
-  <p> <%= request.book.title %> has been requested by <%= request.user.email %>
-  <% end %>
-<% end %>
-<% end %>
-<% end %>
+<div class="container">
+  <div class="row">
+    <% if @books.any? %>
+      <% @books.each do |book| %>
+      <% if book.requests.any? %>
+        <% book.requests.each do |request| %>
+        <div class="col-sm-6 col-md-4">
+          <div class="thumbnail">
+              <%= image_tag request.book.image.url(:medium) %>
+              <div class="caption">
+                <h3><%= request.book.title %></h3>
+                <p> <%= request.user.email %> would like to borrow this book </p>
+              </div>
+          </div>
+        </div>
+        <% end %>
+      <% end %>
+      <% end %>
+    <% else %>
+      <p> No one has requested to borrow any of your books yet. </p>
+    <% end %>
+  </div>
+</div>

@@ -55,6 +55,15 @@
         <% else %>
         <%= image_tag("placeholder.jpg") %>
         <% end %>
+        <% if current_user %>
+          <% if current_user.id != book.user_id %><br>
+            <%= button_to "Request", new_book_request_path(book), class:"btn btn-default btn-md col-md-12", :method => :get %><br>
+            <% end %>
+          <% if current_user.id == book.user_id %><br>
+            <%= button_to "Edit", edit_book_path(book), class:"btn btn-default btn-md col-md-6", :method => :get %>
+            <%= button_to "Delete", book_path(book), class:"btn btn-danger btn-md col-md-6", method: :delete, data: { confirm: "Are you sure?" } %><br>
+          <% end %>
+        <% end %>
         <div class="caption">
           <h3><%= link_to book.title, book_path(book) %></h3>
           <h4>by <%= book.author %></h4>
@@ -71,15 +80,7 @@
             <% end %>
 
             <%= link_to "Comment", new_book_comment_path(book) %>
-            <% if current_user %>
-              <% if current_user.id != book.user_id %>
-                <%= button_to "Request", new_book_request_path(book), class:"btn btn-default", :method => :get %>
-                <% end %>
-              <% if current_user.id == book.user_id %>
-                <p><%= button_to "Edit", edit_book_path(book), class:"btn btn-default", :method => :get %>
-                <%= button_to "Delete", book_path(book), class:"btn btn-danger", method: :delete, data: { confirm: "Are you sure?" } %></p>
-              <% end %>
-            <% end %>
+
           </div>
         </div>
       </div>
