@@ -44,6 +44,7 @@
             <li class="active"><a href="/">Home</a></li>
             <% if user_signed_in? %>
             <li> <%= link_to 'Add a book', new_book_path %></li>
+            <li> <%= link_to 'Incoming Requests', book_requests_path(current_user.id) %></li>
             <% end %>
           </ul>
           <ul class="nav navbar-nav navbar-right">

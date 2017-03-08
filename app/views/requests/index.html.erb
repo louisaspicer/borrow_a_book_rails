@@ -1,0 +1,10 @@
+<% if @books.any? %>
+<% @books.each do |book| %>
+<% if book.requests.any? %>
+  <% book.requests.each do |request| %>
+  <%= image_tag request.book.image.url(:medium) %>
+  <p> <%= request.book.title %> has been requested by <%= request.user.email %>
+  <% end %>
+<% end %>
+<% end %>
+<% end %>

@@ -1,5 +1,9 @@
 class RequestsController < ApplicationController
 
+  def index
+    @books = current_user.books
+  end
+
   def new
     @book = Book.find(params[:book_id])
     @request = Request.new
