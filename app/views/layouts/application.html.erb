@@ -6,7 +6,10 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'custom', media: 'all', 'data-turbolinks-track': 'reload' %>
+
     <style>
+
     footer {
       background-color: #f2f2f2;
       padding: 25px;
@@ -14,6 +17,7 @@
     .container {
       background-color: #f2f2f2;
       padding: 25px;
+      margin-bottom: 100px;
     }
 
     .row {
@@ -28,8 +32,6 @@
     background-color: lavender;
     }
 
-
-    }
   </style>
   </head>
 
@@ -41,19 +43,20 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
             <% if user_signed_in? %>
-            <li> <%= link_to 'Add a book', new_book_path %></li>
-            <li> <%= link_to 'Incoming Requests', book_requests_path(current_user.id) %></li>
+            <li> <%= link_to_in_li 'Home', books_path %></li>
+            <li> <%= link_to_in_li 'Add a book', new_book_path %></li>
+            <li> <%= link_to_in_li 'My books', profile_path %></li>
+            <li> <%= link_to_in_li 'Incoming Requests', book_requests_path(current_user.id) %></li>
             <% end %>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <% if user_signed_in? %>
-              <li><%= link_to "Sign out", destroy_user_session_path, method: :delete %></li>
+              <li><%= link_to_in_li "Sign out", destroy_user_session_path, method: :delete %></li>
             <% else %>
-              <li><%= link_to "Login", new_user_session_path %></li>
-              <li><%= link_to "Login with Facebook", user_facebook_omniauth_authorize_path %></li>
-              <li><%= link_to "Sign up", new_user_registration_path %></li>
+              <li><%= link_to_in_li "Login", new_user_session_path %></li>
+              <li><%= link_to_in_li"Login with Facebook", user_facebook_omniauth_authorize_path %></li>
+              <li><%= link_to_in_li "Sign up", new_user_registration_path %></li>
             <% end %>
           </ul>
         </div>
