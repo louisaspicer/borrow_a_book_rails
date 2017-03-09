@@ -85,15 +85,19 @@ feature 'books' do
     end
   end
 
-  # context 'requesting books' do
-  #
-  #   before { Book.create(title: 'The Design of Everyday Things', author: 'Don Norman', user_id: User.first.id) }
-  #
-  #   scenario "user clicks request book button for another user's book" do
-  #     book_title = Book.first.title
-  #     visit '/books'
-  #     click_button 'Request book'
-  #     expect(page).to have_content "You have requested #{book_title}"
-  #   end
-  # end
+  context 'viewing own books' do
+
+    before { Book.create(title: 'The Design of Everyday Things', author: 'Don Norman', user_id: User.first.id) }
+
+    scenario 'view only books user owns' do
+      click_link('Sign out')
+      sign_up_2
+      add_book
+      visit '/books'
+      click_link 'My books'
+      expect(page).to have_content('A Book')
+      expect(page).not_to have_content('The Design of Everyday Things')
+    end
+
+  end
 end
