@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     resources :requests
   end
 
+  get 'profile', to: 'users#show'
+
   root to: "books#index"
 
 end
